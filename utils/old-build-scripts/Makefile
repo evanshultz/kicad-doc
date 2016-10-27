@@ -34,7 +34,7 @@ DOCCHAPTERS:= $(filter-out $(DOCTRANSLATED), $(wildcard $(DOCNAME)_*.adoc))
 #DOCCHAPTERS:=$(wildcard $(DOCNAME)_*.adoc)
 
 #I like HTML in Unix style text
-ASCIIDOCVAR:= -a 'newline=\n' -v
+ASCIIDOCVAR:= -a 'newline=\n' -v -a numbered
 
 #Uncomment this to debug pdflatex
 #DEBUGPDFLTX:= -d
@@ -90,7 +90,6 @@ $(PODIR)/$(DOCNAME).pot: $(DOCNAME).adoc $(foreach l,$(DOCCHAPTERS), $(l))
 #Build/update the single language NN i18n strings .po file
 #$(PODIR)/%.po: $(DOCNAME).adoc #Single file dependency
 $(PODIR)/%.po: $(DOCNAME).adoc $(foreach l,$(DOCCHAPTERS), $(l))
-	@touch $(DOCNAME).adoc
 	@po4a-updatepo -f asciidoc -v -M utf-8 -m $(DOCNAME).adoc $(foreach l,$(DOCCHAPTERS),-m $(l)) -p $@
 
 .PHONY: po-all
